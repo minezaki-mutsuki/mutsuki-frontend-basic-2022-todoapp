@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useAlertHandlerContext } from "../../../contexts/alert_handler";
 import COLOR from "../../../variables/color";
 import AddTaskButton from "../../atoms/AddTaskButton";
 import Task from "../../molecules/Task";
 
 const TodoCard = () => {
   const [taskList, setTaskList] = useState([]);
+  const AlertHandlerContext = useAlertHandlerContext();
 
   const onAddTaskButtonClick = () => {
     const newTask = {
@@ -28,6 +30,7 @@ const TodoCard = () => {
     let newTaskList = [...taskList];
     if (value === "") {
       newTaskList.splice(index, 1);
+      AlertHandlerContext.setAlert("タスクの名前が設定されていません。");
     } else {
       newTaskList.splice(index, 1, {
         state: taskList[index].state,
